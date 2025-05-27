@@ -849,3 +849,9 @@ body {
   cursor: pointer;
   color: #000;
 }
+
+/*confirmar senha*/
+.erro-senha {
+  border-bottom: 2px solid red !important;
+  color: red;
+}
