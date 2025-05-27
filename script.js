@@ -216,17 +216,3 @@ function abrirRecuperacaoSenha() {
     document.getElementById("login-overlay").classList.remove("hidden");
   }
   
-  //Verificar se a senha ta igual no confirmar senha (cadastro)
-  document.getElementById("form-cadastro").addEventListener("submit", function (e) {
-    const senha = document.getElementById("senha").value;
-    const confirmar = document.getElementById("confirmarS").value;
-  
-    if (senha !== confirmar) {
-      e.preventDefault(); // impede o envio do formulário
-      alert("As senhas não coincidem!");
-      document.getElementById("confirmarS").classList.add("erro-senha");
-    } else {
-      document.getElementById("confirmarS").classList.remove("erro-senha");
-    }
-  });
-  
