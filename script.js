@@ -223,3 +223,19 @@ document.getElementById('abrirLoginViaCadastro').addEventListener('click', (even
     overlayCadastro.classList.add('hidden')
     overlayLogin.classList.remove('hidden')
 })
+
+//Favorito
+  document.querySelectorAll('.btn-curtir').forEach(button => {
+    button.addEventListener('click', function () {
+      const heart = this.querySelector('./img/love path');
+      const isFilled = heart.getAttribute('fill') === '#e74c3c';
+
+      if (isFilled) {
+        heart.setAttribute('fill', 'none');
+        heart.setAttribute('stroke', '#888');
+      } else {
+        heart.setAttribute('fill', '#e74c3c');
+        heart.setAttribute('stroke', '#e74c3c');
+      }
+    });
+  });

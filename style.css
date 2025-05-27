@@ -112,7 +112,6 @@ body {
   max-height: 900px;
   width: 100%;
   object-fit: cover;
-  border-radius: 20px;
 }
 
 .carousel-image.left {
@@ -295,7 +294,7 @@ body {
 }
 
 .filtro-box label {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   margin-bottom: 0.4rem;
   color: #FBFCF8;
 }
@@ -916,4 +915,161 @@ input[type="date"]::-moz-calendar-picker-indicator {
 .erro-senha {
   border-bottom: 2px solid red !important;
   color: red;
+}
+
+/* Linha separadora */
+.linha-separadora {
+  width: 70px;
+  height: 2px;
+  background-color: #dcdcdc;
+  margin: 60px auto 40px auto;
+  border-radius: 4px;
+}
+
+/* Seção inferior de eventos */
+.eventos-inferior {
+  padding: 40px 5% 80px;
+  background-color: #fbfcf8;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  color: #333;
+}
+
+.eventos-inferior h2 {
+  font-size: 2rem;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 40px;
+}
+
+.eventos-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* Card do evento */
+.evento-card {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.evento-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Grid de eventos */
+.eventos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.evento-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  max-width: 300px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.evento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.evento-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.btn-curtir {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.btn-curtir img {
+  width: 24px;
+  height: 24px;
+  transition: filter 0.3s;
+}
+
+.btn-curtir:hover img {
+  filter: brightness(0.8);
+}
+
+
+.evento-card h3 {
+  font-size: 1.2rem;
+  margin: 15px 0 10px;
+  color: #222;
+}
+
+.evento-card p {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: #555;
+  padding: 0 10px;
+}
+
+.evento-card a {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #09b8b8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.evento-card a:hover {
+  background-color: #077c7c;
+}
+
+.evento-info {
+  padding: 16px;
+}
+
+.evento-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.evento-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.evento-info a {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #09b8b8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.evento-info a:hover {
+  background-color: #077c7c;
 }
