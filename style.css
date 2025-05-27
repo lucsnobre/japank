@@ -99,7 +99,7 @@ body {
   position: relative;
   height: 500px; /* BEM maior */
   overflow: visible;
-  padding-top: 100px;
+  padding-top: 200px;
 }
 
 .carousel-image {
@@ -238,11 +238,11 @@ body {
   justify-content: space-around;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.3rem 1px;
+  padding: 1.8rem 1px;
   background: linear-gradient(90deg, transparent 0%, #FF7100 100%, transparent 0%);
   border-radius: 16px;
   position: absolute;
-  bottom: -100px;
+  bottom: -377px;
   /* era -100px */
   left: 48%;
   transform: translateX(-50%);
@@ -252,6 +252,7 @@ body {
   color: #FBFCF8;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 150px;
 }
 
 
@@ -259,12 +260,14 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  
 }
 
 .icone-filtro {
   width: 20px;
   height: 20px;
   object-fit: contain;
+  
 }
 
 
@@ -280,6 +283,7 @@ body {
   max-width: 300px;
   padding: 0 1rem;
   position: relative;
+  
 }
 
 .filtro-box:not(:last-child)::after {
