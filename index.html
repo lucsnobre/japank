@@ -23,22 +23,24 @@
 
   <section class="hero">
     <div class="carousel">
-      <div class="carousel-layer layer-left">
-        <img src="./img/Rectangle (1).png" alt="Slide anterior" />
+      <div class="carousel-image left">
+        <img src="./img/Rectangle (1).png" alt="Imagem 1">
       </div>
-      <div class="carousel-layer layer-center">
-        <img src="./img/hero.png" alt="Slide atual" />
+      <div class="carousel-image center">
+        <img src="./img/hero.png" alt="Imagem 2">
       </div>
-      <div class="carousel-layer layer-right">
-        <img src="./img/Rectangle.png" alt="Slide seguinte" />
+      <div class="carousel-image right">
+        <img src="./img/Rectangle.png" alt="Imagem 3">
       </div>
-      <!-- Setas -->
-      <button class="carousel-arrow left">
-        <img src="./img/seta_esquerda.png" alt="Anterior">
-      </button>
-      <button class="carousel-arrow right">
-        <img src="./img/seta_direita.png" alt="Próximo">
-      </button>
+    </div>
+
+    <!-- Setas -->
+    <button class="carousel-arrow left">
+      <img src="./img/seta_esquerda.png" alt="Anterior">
+    </button>
+    <button class="carousel-arrow right">
+      <img src="./img/seta_direita.png" alt="Próximo">
+    </button>
     </div>
 
     <div class="filtros">
@@ -91,57 +93,56 @@
         <button type="submit">Cadastrar</button>
       </form>
 
-      <p class="login-link">Já tem uma conta? <a href="#">Entrar aqui</a></p>
+      <p class="login-link">Já tem uma conta? <a href="#" id="abrirLoginViaCadastro">Entrar aqui</a></p>
       <p class="termos">
         Ao se cadastrar, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de Privacidade</a>.
       </p>
     </div>
   </div>
 
- <!-- POP-UP DE LOGIN -->
-<div id="login-overlay" class="overlay hidden">
-  <div class="modal-cadastro">
-    <button class="close-btn" id="fecharLogin">&times;</button>
-    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
-    <h2>Fazer Login</h2>
-    <p>Bem-vindo! Que bom ter você de volta!</p>
+  <!-- POP-UP DE LOGIN -->
+  <div id="login-overlay" class="overlay hidden">
+    <div class="modal-cadastro">
+      <button class="close-btn" id="fecharLogin">&times;</button>
+      <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+      <h2>Fazer Login</h2>
+      <p>Bem-vindo! Que bom ter você de volta!</p>
 
-    <form id="form-login">
-      <input type="email" id="login-email" placeholder="E-mail" required>
-      <input type="password" id="login-senha" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
-    </form>
+      <form id="form-login">
+        <input type="email" id="login-email" placeholder="E-mail" required>
+        <input type="password" id="login-senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+      </form>
 
-    <p class="esqueceu-senha">
-      Esqueceu a senha? <a href="#" onclick="abrirRecuperacaoSenha()">Clique aqui</a>
-    </p>
+      <p class="esqueceu-senha">
+        Esqueceu a senha? <a href="#" onclick="abrirRecuperacaoSenha()">Clique aqui</a>
+      </p>
 
-    <p class="login-link">Ainda não tem uma conta? <a href="#" id="abrirCadastroViaLogin">Cadastre-se aqui</a></p>
-    <p class="termos">
-      Ao entrar, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de Privacidade</a>.
-    </p>
+      <p class="login-link">Ainda não tem uma conta? <a href="#" id="abrirCadastroViaLogin">Cadastre-se aqui</a></p>
+      <p class="termos">
+        Ao entrar, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de Privacidade</a>.
+      </p>
+    </div>
   </div>
-</div>
 
-<!-- POP-UP DE RECUPERAÇÃO DE SENHA -->
-<div id="recuperacao-overlay" class="overlay hidden">
-  <div class="modal-cadastro">
-    <button class="close-btn" id="fecharRecuperacao" onclick="fecharRecuperacaoSenha()">&times;</button>
-    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
-    <h2>Recuperar Senha</h2>
-    <p>Informe o email e a nova  senha para ser redefinido.</p>
+  <!-- POP-UP DE RECUPERAÇÃO DE SENHA -->
+  <div id="recuperacao-overlay" class="overlay hidden">
+    <div class="modal-cadastro">
+      <button class="close-btn" id="fecharRecuperacao" onclick="fecharRecuperacaoSenha()">&times;</button>
+      <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+      <h2>Recuperar Senha</h2>
+      <p>Informe o email e a nova senha para ser redefinido.</p>
 
-    <form id="form-recuperar-senha">
-      <input type="email" id="recuperar-email" placeholder="E-mail" required>
-      <button type="submit">Enviar</button>
-    </form>
+      <form id="form-recuperar-senha">
+        <input type="email" id="recuperar-email" placeholder="E-mail" required>
+        <button type="submit">Enviar</button>
+      </form>
 
-    <p class="voltar-login">
-      <a href="#" id="voltarLogin" onclick="voltarParaLogin()">Voltar para login</a>
-    </p>
+      <p class="voltar-login">
+        <a href="#" id="voltarLogin" onclick="voltarParaLogin()">Voltar para login</a>
+      </p>
+    </div>
   </div>
-</div>
-
 </body>
 
 </html>
