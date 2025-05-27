@@ -243,32 +243,28 @@ document.querySelectorAll('.btn-curtir').forEach(button => {
 //Login
 
 document.getElementById('form-login').addEventListener('submit', async function (event) {
-    event.preventDefault();
+    event.preventDefault()
 
-    const email = document.getElementById('login-email').value.trim();
-    const senha = document.getElementById('login-senha').value.trim();
+    const email = document.getElementById('login-email').value.trim()
+    const senha = document.getElementById('login-senha').value.trim()
 
     try {
-        const url = `http://localhost:3030/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
-        const response = await fetch(url);
+        const url = `http://localhost:3030/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+        const response = await fetch(url)
 
         if (!response.ok) {
-            throw new Error('Email ou senha incorretos');
+            throw new Error('Email ou senha incorretos')
         }
 
         const data = await response.json();
-        console.log('Login realizado:', data);
+        console.log('Login realizado:', data)
 
-        // Aqui você pode armazenar dados no localStorage, se desejar
-        // Exemplo:
-        // localStorage.setItem('usuarioLogado', JSON.stringify(data));
-
-        alert('Login realizado com sucesso!');
-        document.getElementById('overlayLogin').classList.add('hidden');
-        document.getElementById('form-login').reset();
+        alert('Login realizado com sucesso!')
+        document.getElementById('overlayLogin').classList.add('hidden')
+        document.getElementById('form-login').reset()
 
     } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        alert('Erro ao fazer login. Verifique suas credenciais.');
+        console.error('Erro ao fazer login:', error)
+        alert('Erro ao fazer login. Verifique suas credenciais.')
     }
-});
+})
