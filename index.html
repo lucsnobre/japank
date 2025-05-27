@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planify</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="./script.js" defer></script>
+  <link rel="shortcut icon" href="./img/colorido.png" type="image/x-icon">
+</head>
+
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <img src="./img/planify.png" alt="Planify Logo" />
+    </div>
+    <div class="auth-buttons">
+      <button class="btn entrar">Entrar</button>
+      <button id="botaoCadastrar">Cadastrar</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="carousel">
+      <div class="carousel-layer layer-left">
+        <img src="./img/Rectangle (1).png" alt="Slide anterior" />
+      </div>
+      <div class="carousel-layer layer-center">
+        <img src="./img/hero.png" alt="Slide atual" />
+      </div>
+      <div class="carousel-layer layer-right">
+        <img src="./img/Rectangle.png" alt="Slide seguinte" />
+      </div>
+      <!-- Setas -->
+      <button class="carousel-arrow left">
+        <img src="./img/seta_esquerda.png" alt="Anterior">
+      </button>
+      <button class="carousel-arrow right">
+        <img src="./img/seta_direita.png" alt="Próximo">
+      </button>
+    </div>
+
+    <div class="filtros">
+      <div class="filtro-box">
+        <label for="tipo-evento">Procurando por</label>
+        <div class="filtro-input right-icon">
+          <select id="tipo-evento">
+            <option>Show Musical</option>
+            <option>Festa</option>
+            <option>Stand-up</option>
+          </select>
+          <img src="./img/Chevron Down.png" alt="Ícone de Show" class="icone-filtro">
+        </div>
+      </div>
+
+      <div class="filtro-box">
+        <label for="local-evento">Onde</label>
+        <div class="filtro-input right-icon">
+          <select id="local-evento">
+            <option>São Paulo</option>
+            <option>Rio de Janeiro</option>
+            <option>Belo Horizonte</option>
+          </select>
+          <img src="./img/Chevron Down.png" alt="Ícone de seta" class="icone-filtro-right">
+        </div>
+      </div>
+      <div class="filtro-box">
+        <label for="data">Quando</label>
+        <div class="filtro-input right-icon">
+          <input type="date" id="data" name="data">
+          <img src="./img/Calendar 17 (1).png" alt="Ícone Calendário" class="icone-filtro-right">
+        </div>
+      </div>
+  </section>
+
+  <!-- POP-UP DE CADASTRO -->
+
+  <div id="cadastro-overlay" class="overlay hidden">
+    <div class="modal-cadastro">
+      <button class="close-btn" id="fecharCadastro">&times;</button>
+      <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+      <h2>Fazer Cadastro</h2>
+      <p>Bem-vindo! Crie sua conta agora mesmo.</p>
+
+      <form id="form-cadastro">
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <input type="text" id="nome" placeholder="Nome completo" required>
+        <input type="text" id="nickname" placeholder="Nickname" required>
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <p class="login-link">Já tem uma conta? <a href="#">Entrar aqui</a></p>
+      <p class="termos">
+        Ao se cadastrar, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de Privacidade</a>.
+      </p>
+    </div>
+  </div>
+
+ <!-- POP-UP DE LOGIN -->
+<div id="login-overlay" class="overlay hidden">
+  <div class="modal-cadastro">
+    <button class="close-btn" id="fecharLogin">&times;</button>
+    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+    <h2>Fazer Login</h2>
+    <p>Bem-vindo! Que bom ter você de volta!</p>
+
+    <form id="form-login">
+      <input type="email" id="login-email" placeholder="E-mail" required>
+      <input type="password" id="login-senha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <!-- Link de esqueci a senha (visível e funcional) -->
+    <p class="esqueceu-senha">
+      Esqueceu a senha? <a href="#" onclick="abrirRecuperacaoSenha()">Clique aqui</a>
+    </p>
+
+    <p class="login-link">Ainda não tem uma conta? <a href="#" id="abrirCadastroViaLogin">Cadastre-se aqui</a></p>
+    <p class="termos">
+      Ao entrar, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de Privacidade</a>.
+    </p>
+  </div>
+</div>
+
+<!-- POP-UP DE RECUPERAÇÃO DE SENHA 
+<div id="recuperacao-overlay" class="overlay hidden">
+  <div class="modal-cadastro">
+    <button class="close-btn" id="fecharRecuperacao" onclick="fecharRecuperacaoSenha()">&times;</button>
+    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+    <h2>Recuperar Senha</h2>
+    <p>Informe o email e a nova  senha para ser redefinido.</p>
+
+    <form id="form-recuperar-senha">
+      <input type="email" id="recuperar-email" placeholder="E-mail" required>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <p class="voltar-login">
+      <a href="#" id="voltarLogin" onclick="voltarParaLogin()">Voltar para login</a>
+    </p>
+  </div>
+</div>
+-->
+
+</body>
+
+</html>
