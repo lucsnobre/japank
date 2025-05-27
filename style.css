@@ -5,7 +5,7 @@
 body {
   margin: 0;
   font-family: Inter, sans-serif;
-  background-color: #fff;
+  background-color: #FBFCF8;
   color: #333;
 }
 
@@ -276,7 +276,7 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #FBFCF8;
   flex: 1;
   min-width: 150px;
@@ -933,10 +933,11 @@ input[type="date"]::-moz-calendar-picker-indicator {
 /* Seção inferior de eventos */
 .eventos-inferior {
   padding: 40px 5% 80px;
-  background-color: #fbfcf8;
+  background-color: #FBFCF8;
   text-align: center;
   font-family: Inter, sans-serif;
   color: #333;
+  margin-top: 300px;
 }
 
 .eventos-inferior h2 {
@@ -944,6 +945,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
   color: black;
   font-family: 'Inter', sans-serif;
   margin-bottom: 40px;
+  text-align: start;
 }
 
 .eventos-container {

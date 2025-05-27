@@ -225,17 +225,50 @@ document.getElementById('abrirLoginViaCadastro').addEventListener('click', (even
 })
 
 //Favorito
-  document.querySelectorAll('.btn-curtir').forEach(button => {
+document.querySelectorAll('.btn-curtir').forEach(button => {
     button.addEventListener('click', function () {
-      const heart = this.querySelector('./img/love path');
-      const isFilled = heart.getAttribute('fill') === '#e74c3c';
+        const heart = this.querySelector('./img/love path');
+        const isFilled = heart.getAttribute('fill') === '#e74c3c';
 
-      if (isFilled) {
-        heart.setAttribute('fill', 'none');
-        heart.setAttribute('stroke', '#888');
-      } else {
-        heart.setAttribute('fill', '#e74c3c');
-        heart.setAttribute('stroke', '#e74c3c');
-      }
+        if (isFilled) {
+            heart.setAttribute('fill', 'none');
+            heart.setAttribute('stroke', '#888');
+        } else {
+            heart.setAttribute('fill', '#e74c3c');
+            heart.setAttribute('stroke', '#e74c3c');
+        }
     });
-  });
+});
+
+//Login
+
+document.getElementById('form-login').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-senha').value.trim();
+
+    try {
+        const url = `http://localhost:3030/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error('Email ou senha incorretos');
+        }
+
+        const data = await response.json();
+        console.log('Login realizado:', data);
+
+        // Aqui você pode armazenar dados no localStorage, se desejar
+        // Exemplo:
+        // localStorage.setItem('usuarioLogado', JSON.stringify(data));
+
+        alert('Login realizado com sucesso!');
+        document.getElementById('overlayLogin').classList.add('hidden');
+        document.getElementById('form-login').reset();
+
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login. Verifique suas credenciais.');
+    }
+});
