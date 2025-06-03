@@ -267,3 +267,33 @@ document.getElementById('form-login').addEventListener('submit', async function 
        
     }
 })
+
+// === RECUPERAÇÃO DE SENHA (PRIMEIRA TELA) ===
+document.getElementById('form-recuperar-senha').addEventListener('submit', async function (event) {
+    event.preventDefault()
+
+    const email = document.getElementById('recuperar-email').value.trim()
+
+    try {
+        const response = await fetch('http://10.107.134.19:8080/v1/planify/usuario/recuperar-senha', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        })
+
+        if (!response.ok) {
+            throw new Error('Erro ao enviar e-mail de recuperação')
+        }
+
+        alert('E-mail de recuperação enviado com sucesso! Verifique sua caixa de entrada.')
+
+        //adicionais p futuro
+        // mostrarTelaVerificacao()
+
+    } catch (error) {
+        console.error('Erro:', error)
+        alert('Erro ao tentar enviar e-mail de recuperação. Verifique o endereço e tente novamente.')
+    }
+})

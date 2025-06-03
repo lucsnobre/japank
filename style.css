@@ -1116,6 +1116,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
+
 @supports not selector(::-webkit-scrollbar) {
   .custom-scrollbar {
     scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
@@ -1130,7 +1131,7 @@ select {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  appearance: none; /* remove estilo padrão em alguns navegadores */
+  appearance: none; 
   -webkit-appearance: none;
   -moz-appearance: none;
 }
