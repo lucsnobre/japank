@@ -90,9 +90,9 @@ body {
 }
 
 .logo-img{
-    width: 150px;
-    height: 150px;
-    
+    width: auto;
+    height: 10px;
+    margin-right: 1900px;
 }
 
 .logo-text {
