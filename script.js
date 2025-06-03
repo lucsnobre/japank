@@ -164,7 +164,7 @@ document.getElementById('abrirCadastroViaLogin').addEventListener('click', (even
     document.getElementById('cadastro-overlay').classList.remove('hidden')
 })
 
-// Lógica do login
+/* crud login
 document.getElementById('form-login').addEventListener('submit', async function (event) {
     event.preventDefault()
 
@@ -174,7 +174,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
     const loginData = { email, senha }
 
     try {
-        const response = await fetch('http://10.107.134.19:8080/v1/planify/login', {
+        const response = await fetch('http://10.107.134.4:8080/v1/planify/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -199,7 +199,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
         console.error('Erro ao fazer login:', error)
         alert('Email ou senha incorretos.')
     }
-})
+})*/
 
 //bglh do esqueceu sunha senha
 function abrirRecuperacaoSenha() {
@@ -240,7 +240,7 @@ document.querySelectorAll('.btn-curtir').forEach(button => {
     });
 });
 
-//Login
+//pop up de Login
 
 document.getElementById('form-login').addEventListener('submit', async function (event) {
     event.preventDefault()
@@ -249,7 +249,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
     const senha = document.getElementById('login-senha').value.trim()
 
     try {
-        const url = `http://localhost:3030/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+        const url = `http://10.107.134.4:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
         const response = await fetch(url)
 
         if (!response.ok) {
@@ -264,7 +264,6 @@ document.getElementById('form-login').addEventListener('submit', async function 
         document.getElementById('form-login').reset()
 
     } catch (error) {
-        console.error('Erro ao fazer login:', error)
-        alert('Erro ao fazer login. Verifique suas credenciais.')
+       
     }
 })
