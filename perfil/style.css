@@ -185,6 +185,15 @@ body {
     margin-bottom: 20px;
 }
 
+.profile-picture img {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+  }
+  
+
 .form-row .form-group {
     flex: 1;
     margin-bottom: 0;
