@@ -138,7 +138,7 @@
       </form>
 
       <p class="esqueceu-senha">
-        Esqueceu a senha? <a href="#" onclick="abrirRecuperacaoSenha()">Clique aqui</a>
+        Esqueceu a senha? <a href="#">Clique aqui</a>
       </p>
 
       <p class="login-link">Ainda não tem uma conta? <a href="#" id="abrirCadastroViaLogin">Cadastre-se aqui</a></p>
@@ -166,6 +166,26 @@
       </p>
     </div>
   </div>
+
+  <!-- POP-UP DE VERIFICAÇÃO DE CÓDIGO -->
+<div id="verificacao-overlay" class="overlay hidden">
+  <div class="modal-cadastro">
+    <button class="close-btn" onclick="fecharVerificacao()">&times;</button>
+    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+    <h2>Verificação</h2>
+    <p>Enviamos um código para seu e-mail. Insira abaixo para continuar:</p>
+
+    <form id="form-verificacao-codigo">
+      <input type="text" id="codigo-verificacao" placeholder="Código recebido" required>
+      <button type="submit">Verificar</button>
+    </form>
+
+    <p class="voltar-login">
+      <a href="#" onclick="voltarParaLogin()">Voltar para login</a>
+    </p>
+  </div>
+</div>
+
   
 
 <!-- Linha separadora centralizada -->

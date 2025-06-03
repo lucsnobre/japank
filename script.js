@@ -249,7 +249,7 @@ document.getElementById('form-login').addEventListener('submit', async function 
     const senha = document.getElementById('login-senha').value.trim()
 
     try {
-        const url = `http://10.107.134.4:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+        const url = `http://10.107.144.9:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
         const response = await fetch(url)
 
         if (!response.ok) {
@@ -269,18 +269,34 @@ document.getElementById('form-login').addEventListener('submit', async function 
 })
 
 // === RECUPERAÇÃO DE SENHA (PRIMEIRA TELA) ===
-document.getElementById('form-recuperar-senha').addEventListener('submit', async function (event) {
-    event.preventDefault()
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const linkRecuperar = document.querySelector(".esqueceu-senha a");
+  
+    linkRecuperar.addEventListener("click", (e) => {
+      e.preventDefault();
+      const overlay = document.getElementById("recuperacao-overlay");
+      overlay.classList.remove("hidden");
+    });
+  });
+  
+
+
+
+document.getElementById('form-recuperar-senha').addEventListener('submit', async function (e) {
+    e.preventDefault()
 
     const email = document.getElementById('recuperar-email').value.trim()
 
     try {
-        const response = await fetch('http://10.107.134.19:8080/v1/planify/usuario/recuperar-senha', {
+        const response = await fetch(`http://10.107.144.9:8080/v1/planify/recuperar-senha/${email}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email })
+            body: JSON.stringify({ email: email }) 
         })
 
         if (!response.ok) {
@@ -289,11 +305,40 @@ document.getElementById('form-recuperar-senha').addEventListener('submit', async
 
         alert('E-mail de recuperação enviado com sucesso! Verifique sua caixa de entrada.')
 
-        //adicionais p futuro
-        // mostrarTelaVerificacao()
-
     } catch (error) {
         console.error('Erro:', error)
         alert('Erro ao tentar enviar e-mail de recuperação. Verifique o endereço e tente novamente.')
     }
 })
+
+// === RECUPERAÇÃO DE SENHA (SEGUNDA TELA/DIGITAR CODIGO RECEBIDO)
+
+/*document.getElementById('form-recuperar-senha').addEventListener('submit', async function (e) {
+    e.preventDefault();
+  
+    const email = document.getElementById('recuperar-email').value;
+  
+    console.log('Email digitado:', email); // TESTE AQUI
+  
+    try {
+      const response = await fetch(`http://10.107.144.9:8080/v1/planify/recuperar-senha/${email}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+  
+      if (!response.ok) throw new Error('Erro ao enviar e-mail');
+  
+      // Sucesso: abre o pop-up de verificação
+      document.getElementById('recuperacao-overlay').classList.add('hidden');
+      document.getElementById('verificacao-overlay').classList.remove('hidden');
+  
+      window.emailRecuperacao = email;
+  
+    } catch (error) {
+      alert('Erro ao enviar e-mail: ' + error.message);
+    }
+  });
+  
+ 
+*/
