@@ -44,59 +44,86 @@
     </div>
   -->
     <div class="filtros">
-      <div class="filtro-box">
+      <div class="filtro-box" id="tipo-evento-filtro-box">
         <label for="tipo-evento">Procurando por</label>
         <div class="filtro-input right-icon">
-          <select id="tipo-evento">
-            <option>Show Musical</option>
-            <option>Festa</option>
-            <option>Stand-up</option>
+          <select id="tipo-evento" autocomplete="off">
+            <option value="">Selecione o tipo</option>
+            <option value="show">Show Musical</option>
+            <option value="festa">Festa</option>
+            <option value="standup">Stand-up</option>
+            <!-- Adicione outras categorias se quiser -->
           </select>
           <img src="./img/Chevron Down.png" alt="Ícone de Show" class="icone-filtro">
         </div>
+        <!-- Menu lateral de categorias e subcategorias, inicialmente oculto -->
+        <div class="menu-tipo-cascata" id="menu-tipo-cascata" style="display:none;">
+          <ul class="tipos-lista">
+            <li data-tipo="show">Show Musical</li>
+            <li data-tipo="festa">Festa</li>
+            <li data-tipo="standup">Stand-up</li>
+            <!-- Adicione outras categorias se quiser -->
+          </ul>
+          <ul class="subtipos-lista"></ul>
+        </div>
       </div>
 
-      <div class="filtro-box">
-        <label for="local-evento">Onde</label>
+      <div class="filtro-box" id="estado-filtro-box">
+        <label for="estado">Estado</label>
         <div class="filtro-input right-icon">
-          <select id="local-evento">
-            <option>Acre</option>
-            <option>Alagoas</option>
-            <option>Amapá</option>
-            <option>Amazonas</option>
-            <option>Bahia</option>
-            <option>Ceará</option>
-            <option>Espírito Santo</option>
-            <option>Goiás</option>
-            <option>Maranhão</option>
-            <option>Mato Grosso</option>
-            <option>Mato Grosso</option>
-            <option>Minas Gerais</option>
-            <option>Pará</option>
-            <option>Paraíba</option>
-            <option>Paraná</option>
-            <option>Pernambuco</option>
-            <option>Piauí</option>
-            <option>Rio de Janeiro</option>
-            <option>Rio Grande do Norte</option>
-            <option>Rio Grande do SuL</option>
-            <option>Rondônia</option>
-            <option>Roraima</option>
-            <option>Santa Catarina</option>
-            <option>São Paulo</option>
-            <option>Sergipe</option>
-            <option>Tocantins</option>
+          <select id="estado" autocomplete="off">
+            <option value="">Selecione o estado</option>
+            <option value="PE">Pernambuco</option>
+            <option value="SP">São Paulo</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="BA">Bahia</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <!-- Adicione outros estados se quiser -->
           </select>
           <img src="./img/Chevron Down.png" alt="Ícone de seta" class="icone-filtro-right">
         </div>
-      </div>
-      <div class="filtro-box">
-        <label for="data">Quando</label>
-        <div class="filtro-input right-icon">
-          <input type="date" id="data" name="data">
-          <img src="./img/Calendar 17 (1).png" alt="Ícone Calendário" class="icone-filtro-right">
+        <!-- Menu lateral de estados e cidades, inicialmente oculto -->
+        <div class="menu-cidades-cascata" id="menu-cidades-cascata" style="display:none;">
+          <ul class="estados-lista">
+            <li data-estado="PE">Pernambuco</li>
+            <li data-estado="SP">São Paulo</li>
+            <li data-estado="RJ">Rio de Janeiro</li>
+            <li data-estado="MG">Minas Gerais</li>
+            <li data-estado="BA">Bahia</li>
+            <li data-estado="RS">Rio Grande do Sul</li>
+            <!-- Adicione outros estados se quiser -->
+          </ul>
+          <ul class="cidades-lista"></ul>
         </div>
       </div>
+
+      <div class="filtro-box" id="quando-filtro-box">
+        <label for="quando">Quando</label>
+        <div class="filtro-input right-icon">
+          <input type="text" id="quando" name="quando" placeholder="Selecione a data" readonly autocomplete="off">
+          <img src="./img/Calendar 17 (1).png" alt="Ícone Calendário" class="icone-filtro-right">
+        </div>
+        <!-- Menu lateral de calendário, inicialmente oculto -->
+        <div class="menu-calendario-cascata" id="menu-calendario-cascata" style="display:none;">
+          <div class="calendario-header">
+            <button class="cal-prev" type="button">&#8592;</button>
+            <span class="cal-mesano"></span>
+            <button class="cal-next" type="button">&#8594;</button>
+          </div>
+          <table class="calendario-table">
+            <thead>
+              <tr>
+                <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dias serão preenchidos via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- POP-UP DE CADASTRO -->
@@ -154,7 +181,7 @@
       <button class="close-btn" id="fecharRecuperacao" onclick="fecharRecuperacaoSenha()">&times;</button>
       <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
       <h2>Recuperar Senha</h2>
-      <p>Informe o email e a nova senha para ser redefinido.</p>
+      <p>Informe seu email para redefinir a senha.</p>
 
       <form id="form-recuperar-senha">
         <input type="email" id="recuperar-email" placeholder="E-mail" required>
@@ -186,6 +213,25 @@
   </div>
 </div>
 
+<!-- POP-UP INSERIR NOVA SENHA -->
+<div id="nova-senha-overlay" class="overlay hidden">
+  <div class="modal-cadastro">
+    <button class="close-btn" onclick="fecharNovaSenha()">&times;</button>
+    <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
+    <h2>Nova Senha</h2>
+    <p>Digite sua nova senha para redefinir:</p>
+
+    <form id="form-nova-senha">
+      <input type="password" id="nova-senha" placeholder="Nova senha" required>
+      <button type="submit">Salvar</button>
+    </form>
+
+    <p class="voltar-login">
+      <a href="#" onclick="voltarParaLogin()">Voltar para login</a>
+    </p>
+  </div>
+</div>
+
   
 
 <!-- Linha separadora centralizada -->
@@ -196,156 +242,8 @@
   <h2>Eventos em Destaque</h2>
 
   <div class="eventos-container">
-    <!-- Evento 1 -->
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Piscina de Diamante - MC KEVIN</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <!-- Evento 2 -->
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/41yckFnkO3L._UXNaN_FMjpg_QL85_.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Audição: Ainda No Mesmo Bairro</h3>
-        <p>15 de Agosto - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <!-- Evento 3 -->
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/FigSo6gXEAAXIfq.jfif" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Cena2K25</h3>
-        <p>25 de Novembro - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/hq720.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>DANIEL ROCHA VS TZ DA CORONEL - AO VIVO</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/36503-1180x420-36.png" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>É RAP É TRAP É FUNK</h3>
-        <p>16 de Agosto - Rio de Janeiro</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/62148295ae58c9d49a43330f93dfdb3a.avif" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>333: Salve Todos - Audição Ao Vivo</h3>
-        <p>31 de Maio - Fortaleza</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-
-    <div class="evento-card">
-      <button class="btn-curtir" title="Salvar evento">
-        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
-      </button>      
-      <img class="evento-img" src="./img/pau nu jugu.jpg" alt="Imagem do Evento">
-      <div class="evento-info">
-        <h3>Festival de Música</h3>
-        <p>20 de Julho - São Paulo</p>
-        <a href="#">Ver mais</a>
-      </div>
-    </div>
-    
+    <!-- Os cards serão preenchidos dinamicamente via JS -->
   </div>
-    
-  
 </section>
 
 
