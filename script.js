@@ -9,7 +9,6 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
     const nome = document.getElementById('nome').value.trim()
     const nickname = document.getElementById('nickname').value.trim()
 
-
     const novoUsuario = {
         email: email,
         senha: senha,
@@ -20,16 +19,28 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
     try {
         const resultado = await postUsuario(novoUsuario)
         console.log('Usuário cadastrado:', resultado)
+        
+        // Armazenar dados do usuário
+        if (resultado.token) {
+            localStorage.setItem('token', resultado.token)
+            localStorage.setItem('userData', JSON.stringify(resultado))
+            
+            // Alternar entre os headers
+            document.querySelector('.top-bar:not(.logged-in)').style.display = 'none'
+            document.getElementById('header-logged-in').style.display = 'flex'
+            
+            // Atualizar foto do perfil se disponível
+            if (resultado.fotoPerfil) {
+                document.getElementById('user-profile-img').src = resultado.fotoPerfil
+            }
+        }
+
         alert('Cadastro realizado com sucesso!')
 
         // Fecha o modal e limpa o formulário
         document.getElementById('cadastro-overlay').classList.add('hidden')
         document.getElementById('form-cadastro').reset()
         
-        // Atualiza o estado do usuário
-        currentUser = resultado;
-        updateHeader();
-
     } catch (error) {
         console.error('Erro ao cadastrar:', error)
         alert('Erro ao cadastrar usuário. Verifique os dados e tente novamente.')
@@ -40,26 +51,6 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
 
 
 //FunçõesAPI
-let currentUser = null;
-
-// Função para atualizar o header com base no estado de autenticação
-function updateHeader() {
-    const authHeader = document.querySelector('.top-bar:not(.logged-in)');
-    const loggedInHeader = document.getElementById('header-logged-in');
-    
-    if (currentUser) {
-        authHeader.classList.add('hidden');
-        loggedInHeader.classList.remove('hidden');
-        // Atualiza a foto de perfil
-        if (currentUser.profilePicture) {
-            document.getElementById('user-profile-img').src = currentUser.profilePicture;
-        }
-    } else {
-        authHeader.classList.remove('hidden');
-        loggedInHeader.classList.add('hidden');
-    }
-}
-
 async function getUsuarios() {
     const url = `http://10.107.134.19:8080/v1/planify/usuario`
 
@@ -219,10 +210,6 @@ document.getElementById('form-login').addEventListener('submit', async function 
         overlayLogin.classList.add('hidden')
         document.getElementById('form-login').reset()
         
-        // Atualiza o estado do usuário
-        currentUser = data.usuario;
-        updateHeader();
-
     } catch (error) {
         console.error('Erro ao fazer login:', error)
         alert('Email ou senha incorretos.')
@@ -278,21 +265,67 @@ document.getElementById('form-login').addEventListener('submit', async function 
 
     try {
         const url = `http://10.107.134.4:8080/v1/planify/usuario/login/email/senha?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
-        const response = await fetch(url)
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, senha })
+        })
 
-        if (!response.ok) {
-            throw new Error('Email ou senha incorretos')
-        }
+        if (!response.ok) throw new Error('Login inválido')
 
-        const data = await response.json();
+        const data = await response.json()
         console.log('Login realizado:', data)
 
+        if (data.token) {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('userData', JSON.stringify(data))
+            
+            // Alternar entre os headers
+            document.querySelector('.top-bar:not(.logged-in)').style.display = 'none'
+            document.getElementById('header-logged-in').style.display = 'flex'
+            
+            // Atualizar foto do perfil se disponível
+            if (data.fotoPerfil) {
+                document.getElementById('user-profile-img').src = data.fotoPerfil
+            }
+        }
+
         alert('Login realizado com sucesso!')
-        document.getElementById('overlayLogin').classList.add('hidden')
+        overlayLogin.classList.add('hidden')
         document.getElementById('form-login').reset()
-
+        
     } catch (error) {
+        console.error('Erro ao fazer login:', error)
+        alert('Email ou senha incorretos.')
+    }
+})
 
+// Adicionar evento de clique na foto do perfil
+document.getElementById('user-profile-img').addEventListener('click', function() {
+    window.location.href = '/perfil/index.html'
+})
+
+// Adicionar evento de clique no botão de criar evento
+document.querySelector('.btn.criar-evento').addEventListener('click', function() {
+    // Aqui você pode adicionar a lógica para criar um evento
+    // Por exemplo, redirecionar para uma página de criação de evento
+    window.location.href = '/criar-evento/index.html'
+})
+
+// Verificar se o usuário já está logado ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token')
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}')
+    
+    if (token) {
+        document.querySelector('.top-bar:not(.logged-in)').style.display = 'none'
+        document.getElementById('header-logged-in').style.display = 'flex'
+        
+        if (userData.fotoPerfil) {
+            document.getElementById('user-profile-img').src = userData.fotoPerfil
+        }
     }
 })
 
@@ -846,3 +879,78 @@ function formatarData(dataStr) {
 }
 
 window.addEventListener('DOMContentLoaded', carregarEventos);
+
+// Função para filtrar eventos
+async function filtrarEventos() {
+    const tipoEvento = document.getElementById('tipo-evento').value;
+    const estado = document.getElementById('estado').value;
+    const data = document.getElementById('quando').value;
+    
+    try {
+        // Construir a URL com os parâmetros de filtro
+        let url = 'http://10.107.134.4:8080/v1/planify/evento';
+        const params = new URLSearchParams();
+        
+        if (tipoEvento) params.append('tipo', tipoEvento);
+        if (estado) params.append('estado', estado);
+        if (data) params.append('data', data);
+        
+        if (params.toString()) {
+            url += `?${params.toString()}`;
+        }
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Erro ao buscar eventos');
+        
+        const data = await response.json();
+        const eventos = data.eventos || data;
+        
+        // Atualizar a exibição dos eventos
+        const container = document.querySelector('.eventos-container');
+        if (!eventos.length) {
+            container.innerHTML = '<p style="color:#666;text-align:center;width:100%;">Nenhum evento encontrado com os filtros selecionados.</p>';
+            return;
+        }
+        
+        container.innerHTML = '';
+        eventos.forEach(evento => {
+            container.innerHTML += `
+                <div class="evento-card">
+                    <button class="btn-curtir" title="Salvar evento">
+                        <img class="icone-curtir-img" src="./img/coracao.png" alt="Curtir">
+                    </button>
+                    <img class="evento-img" src="${evento.imagem || './img/placeholder.jpg'}" alt="Imagem do Evento">
+                    <div class="evento-info">
+                        <h3>${evento.nome || ''}</h3>
+                        <p>${evento.data ? formatarData(evento.data) : ''}${evento.cidade ? ' - ' + evento.cidade : ''}</p>
+                        ${evento.descricao ? `<p style='font-size:0.95em;color:#444;margin-top:6px;'>${evento.descricao}</p>` : ''}
+                        ${evento.endereco ? `<p style='font-size:0.92em;color:#666;margin-top:2px;'>${evento.endereco}</p>` : ''}
+                        ${evento.preco ? `<p style='font-size:1em;color:#b4580f;margin-top:2px;'>R$ ${evento.preco}</p>` : ''}
+                    </div>
+                    <div class="evento-arrow">
+                        <img src="./img/seta.png" alt="Ver mais">
+                    </div>
+                </div>
+            `;
+        });
+        
+    } catch (error) {
+        console.error('Erro ao filtrar eventos:', error);
+        alert('Erro ao filtrar eventos. Por favor, tente novamente.');
+    }
+}
+
+// Adicionar event listeners para os filtros
+document.getElementById('tipo-evento').addEventListener('change', filtrarEventos);
+document.getElementById('estado').addEventListener('change', filtrarEventos);
+document.getElementById('quando').addEventListener('change', filtrarEventos);
+
+// Função auxiliar para formatar data
+function formatarData(dataString) {
+    const data = new Date(dataString);
+    return data.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
