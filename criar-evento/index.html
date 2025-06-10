@@ -10,12 +10,11 @@
 <body>
   <header class="header">
     <div class="logo">
-      <img src="/logo.svg" alt="Planify Logo" height="40">
+      <img src="img/planify.png" alt="Planify Logo" height="40">
       <span>Planify</span>
     </div>
-    <div class="header-actions">
-      <button class="header-btn">Entrar</button>
-      <button class="header-btn destaque">Cadastre-se</button>
+    <div class="profile-user">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto do Usuário">
     </div>
   </header>
   <main class="main-bg">
@@ -30,9 +29,9 @@
           </div>
           <div class="form-group image-group">
             <label>Imagem de Divulgação</label>
-            <div class="image-upload-modern" id="image-upload">
+            <div class="image-upload-modern highlight-upload" id="image-upload">
               <input type="file" id="imagem-divulgacao" accept="image/*" style="display:none">
-              <div class="image-placeholder-modern" id="image-placeholder">
+              <div class="image-placeholder-modern highlight-upload-box" id="image-placeholder">
                 <i class="fas fa-image"></i>
                 <span>Clique ou arraste a imagem aqui</span>
               </div>
@@ -49,28 +48,37 @@
             <button type="button" class="categoria-btn-modern">Categoria <i class="fas fa-angle-down"></i></button>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group data-hora-group">
-            <label>Data e Hora</label>
-            <div class="data-hora-fields">
-              <div class="input-icon-modern">
-                <input type="date">
-                <i class="fas fa-calendar"></i>
-              </div>
-              <div class="input-icon-modern">
-                <input type="time">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="input-icon-modern">
-                <input type="date">
-                <i class="fas fa-calendar"></i>
-              </div>
-              <div class="input-icon-modern">
-                <input type="time">
-                <i class="fas fa-clock"></i>
-              </div>
+        <div class="form-row data-hora-row">
+          <div class="data-hora-card">
+            <label>Data do Evento</label>
+            <div class="input-icon-modern">
+              <input type="date">
+              <i class="fas fa-calendar"></i>
             </div>
           </div>
+          <div class="data-hora-card">
+            <label>Hora de Início</label>
+            <div class="input-icon-modern">
+              <input type="time">
+              <i class="fas fa-clock"></i>
+            </div>
+          </div>
+          <div class="data-hora-card">
+            <label>Data de Término</label>
+            <div class="input-icon-modern">
+              <input type="date">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+          <div class="data-hora-card">
+            <label>Hora de Término</label>
+            <div class="input-icon-modern">
+              <input type="time">
+              <i class="fas fa-clock"></i>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
           <div class="form-group localizacao-group">
             <label>Localização</label>
             <input type="text" placeholder="Endereço">
