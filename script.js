@@ -25,6 +25,10 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
         // Fecha o modal e limpa o formulário
         document.getElementById('cadastro-overlay').classList.add('hidden')
         document.getElementById('form-cadastro').reset()
+        
+        // Atualiza o estado do usuário
+        currentUser = resultado;
+        updateHeader();
 
     } catch (error) {
         console.error('Erro ao cadastrar:', error)
@@ -36,6 +40,26 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
 
 
 //FunçõesAPI
+let currentUser = null;
+
+// Função para atualizar o header com base no estado de autenticação
+function updateHeader() {
+    const authHeader = document.querySelector('.top-bar:not(.logged-in)');
+    const loggedInHeader = document.getElementById('header-logged-in');
+    
+    if (currentUser) {
+        authHeader.classList.add('hidden');
+        loggedInHeader.classList.remove('hidden');
+        // Atualiza a foto de perfil
+        if (currentUser.profilePicture) {
+            document.getElementById('user-profile-img').src = currentUser.profilePicture;
+        }
+    } else {
+        authHeader.classList.remove('hidden');
+        loggedInHeader.classList.add('hidden');
+    }
+}
+
 async function getUsuarios() {
     const url = `http://10.107.134.19:8080/v1/planify/usuario`
 
@@ -194,6 +218,10 @@ document.getElementById('form-login').addEventListener('submit', async function 
         alert('Login realizado com sucesso!')
         overlayLogin.classList.add('hidden')
         document.getElementById('form-login').reset()
+        
+        // Atualiza o estado do usuário
+        currentUser = data.usuario;
+        updateHeader();
 
     } catch (error) {
         console.error('Erro ao fazer login:', error)

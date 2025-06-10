@@ -19,6 +19,31 @@ body {
   z-index: 10;
 }
 
+.top-bar.logged-in {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+#header-logged-in .logo img {
+  height: 80px;
+  padding-top: 10px;
+  padding-left: 140px;
+}
+
 .logo {
   display: flex;
   align-items: center;
