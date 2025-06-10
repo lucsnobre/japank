@@ -1563,3 +1563,10 @@ select {
   outline: none;
   border-bottom-color: #FBFCF8;
 }
+
+/* Deixar o texto e o placeholder do campo #quando brancos */
+#quando,
+#quando::placeholder {
+  color: #fff !important;
+  opacity: 1;
+}
