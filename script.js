@@ -344,132 +344,141 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
-document.getElementById('form-recuperar-senha').addEventListener('submit', async function (e) {
+// Função para enviar email de recuperação
+document.getElementById('form-recuperar-senha').addEventListener('submit', async function(e) {
     e.preventDefault();
     try {
         const email = document.getElementById('recuperar-email').value.trim();
         console.log('[1] Email capturado:', email);
 
-        console.log('[DEBUG] Antes do fetch');
         const response = await fetch(`http://10.107.134.4:8080/v1/planify/recuperar-senha/${email}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         });
-        console.log(response)
-    
-        console.log('[DEBUG] Depois do fetch');
-        console.log('Status da resposta:', response.status);
-        if (!response.ok) {
-            console.error('[2] Erro na resposta do servidor');
-            throw new Error('Erro ao enviar e-mail');
-        }
 
-        console.log('[3] Requisição enviada com sucesso');
+        if (!response.ok) throw new Error('Erro ao enviar email de recuperação');
+
+        const data = await response.json();
+        console.log('Resposta da API:', data);
+
+        // Armazena o email para uso posterior
         recoveryEmail = email;
 
-        // Oculta recuperação
-        const recuperacao = document.getElementById('recuperacao-overlay');
-        recuperacao.classList.add('hidden');
-        console.log('[4] Escondeu recuperação?', recuperacao.classList.contains('hidden'));
+        // Fecha o modal de recuperação e abre o modal de verificação
+        document.getElementById('recuperacao-overlay').classList.add('hidden');
+        document.getElementById('verificacao-overlay').classList.remove('hidden');
 
-        // Mostra verificação
-        alert('Sucesso!');
-        const verificacao = document.getElementById('verificacao-overlay');
-        verificacao.classList.remove('hidden');
+        alert('Email de recuperação enviado com sucesso! Verifique sua caixa de entrada.');
+
     } catch (error) {
-        console.error('[GLOBAL CATCH] Erro inesperado:', error);
-        alert('Erro inesperado: ' + error.message);
+        console.error('Erro ao enviar email:', error);
+        alert('Erro ao enviar email de recuperação. Por favor, tente novamente.');
     }
 });
 
-
-
-
-//Verficar codigo
-document.getElementById('form-verificacao-codigo').addEventListener('submit', async function (e) {
+// Função para verificar o código
+document.getElementById('form-verificacao-codigo').addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    const codigo = document.getElementById('codigo-verificacao').value.trim();
-
-    if (!recoveryEmail) {
-        alert('Email de recuperação não encontrado. Por favor, inicie o processo novamente.');
-        return;
-    }
-
     try {
-        const response = await fetch(`http://10.107.134.4:8080/v1/planify/verificar-codigo`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: recoveryEmail, codigo: codigo })
-        });
-
-        if (!response.ok) {
-            throw new Error('Código inválido');
+        const codigo = document.getElementById('codigo-verificacao').value.trim();
+        
+        if (!recoveryEmail) {
+            throw new Error('Email de recuperação não encontrado');
         }
 
-        const data = await response.json();
-        recoveryToken = data.token;
+        const response = await fetch(`http://10.107.134.4:8080/v1/planify/verificar-codigo`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: recoveryEmail,
+                codigo: codigo
+            })
+        });
 
-        const overlay = document.getElementById('verificacao-overlay');
-        overlay.classList.remove('hidden');
+        if (!response.ok) throw new Error('Código inválido');
+
+        const data = await response.json();
+        recoveryToken = data.token; // Armazena o token para uso na redefinição de senha
+
+        // Fecha o modal de verificação e abre o modal de nova senha
+        document.getElementById('verificacao-overlay').classList.add('hidden');
         document.getElementById('nova-senha-overlay').classList.remove('hidden');
 
     } catch (error) {
-        console.error('Erro:', error);
-        alert('Código inválido. Por favor, verifique o código recebido por e-mail.');
+        console.error('Erro ao verificar código:', error);
+        alert('Código inválido. Por favor, tente novamente.');
     }
 });
 
-//NOVA senha
-document.getElementById('form-nova-senha').addEventListener('submit', async function (e) {
+// Função para redefinir a senha
+document.getElementById('form-nova-senha').addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    const novaSenha = document.getElementById('nova-senha').value.trim();
-
-    if (!recoveryToken) {
-        alert('Token de recuperação não encontrado. Por favor, inicie o processo novamente.');
-        return;
-    }
-
     try {
-        const response = await fetch(`http://10.107.134.4:8080/v1/planify/redefinir-senha`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token: recoveryToken, novaSenha: novaSenha })
-        });
-
-        if (!response.ok) {
-            throw new Error('Erro ao redefinir senha');
+        const novaSenha = document.getElementById('nova-senha').value.trim();
+        
+        if (!recoveryEmail || !recoveryToken) {
+            throw new Error('Dados de recuperação não encontrados');
         }
 
-        alert('Senha redefinida com sucesso! Agora você pode fazer login com a nova senha.');
-        document.getElementById('nova-senha-overlay').classList.add('hidden');
-        document.getElementById('login-overlay').classList.remove('hidden');
+        const response = await fetch(`http://10.107.134.4:8080/v1/planify/redefinir-senha`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${recoveryToken}`
+            },
+            body: JSON.stringify({
+                email: recoveryEmail,
+                novaSenha: novaSenha
+            })
+        });
+
+        if (!response.ok) throw new Error('Erro ao redefinir senha');
+
+        // Limpa as variáveis de recuperação
         recoveryEmail = null;
         recoveryToken = null;
 
+        // Fecha o modal de nova senha e abre o modal de login
+        document.getElementById('nova-senha-overlay').classList.add('hidden');
+        document.getElementById('login-overlay').classList.remove('hidden');
+
+        alert('Senha redefinida com sucesso! Faça login com sua nova senha.');
+
     } catch (error) {
-        console.error('Erro:', error);
+        console.error('Erro ao redefinir senha:', error);
         alert('Erro ao redefinir senha. Por favor, tente novamente.');
     }
 });
 
+// Funções auxiliares para navegação entre modais
+function voltarParaLogin() {
+    document.getElementById('recuperacao-overlay').classList.add('hidden');
+    document.getElementById('verificacao-overlay').classList.add('hidden');
+    document.getElementById('nova-senha-overlay').classList.add('hidden');
+    document.getElementById('login-overlay').classList.remove('hidden');
+    
+    // Limpa as variáveis de recuperação
+    recoveryEmail = null;
+    recoveryToken = null;
+}
 
-// fechar popups
-document.querySelectorAll('.fechar').forEach(button => {
-    button.addEventListener('click', () => {
-        const overlay = button.closest('.overlay');
-        overlay.classList.add('hidden');
-        recoveryEmail = null;
-        recoveryToken = null;
-    });
-});
+function fecharRecuperacaoSenha() {
+    document.getElementById('recuperacao-overlay').classList.add('hidden');
+    recoveryEmail = null;
+}
+
+function fecharVerificacao() {
+    document.getElementById('verificacao-overlay').classList.add('hidden');
+    recoveryEmail = null;
+    recoveryToken = null;
+}
+
+function fecharNovaSenha() {
+    document.getElementById('nova-senha-overlay').classList.add('hidden');
+    recoveryEmail = null;
+    recoveryToken = null;
+}
 
 /*document.getElementById('form-recuperar-senha').addEventListener('submit', async function (e) {
     e.preventDefault();
