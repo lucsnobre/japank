@@ -11,19 +11,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 48px 10px 48px;
+  padding:0rem 6rem;
   background: transparent;
 }
 .logo {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-size: 2rem;
   font-weight: bold;
   color: #222;
 }
 .logo img {
-  height: 40px;
+  display: flex;
+    align-items: center;
+  justify-content: center;
+  height: 180px;
 }
 .header-actions, .header-btn, .header-btn.destaque {
   display: none !important;
@@ -41,6 +45,7 @@ body {
   overflow: hidden;
   cursor: pointer;
   margin-left: 18px;
+  margin-bottom: 50px;
 }
 .profile-user img {
   width: 100%;
@@ -132,7 +137,7 @@ input:focus, textarea:focus {
   box-shadow: 0 2px 12px rgba(200, 131, 59, 0.13);
   background: linear-gradient(120deg, rgba(255,255,255,0.85) 60%, rgba(200,131,59,0.13) 100%);
 }
-.categoria-btn-modern {
+.categoria-btn-modern, select {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -140,16 +145,44 @@ input:focus, textarea:focus {
   color: #C0833B;
   border: 2px solid #C0833B;
   font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 16px;
   cursor: pointer;
   margin-top: 4px;
-  transition: background 0.2s, color 0.2s;
   box-shadow: 0 2px 8px rgba(200, 131, 59, 0.10);
   backdrop-filter: blur(4px);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23C0833B" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px; /* espaço para o ícone */
 }
-.categoria-btn-modern:hover {
-  background: linear-gradient(120deg, #C0833B 60%, #C83B1B 100%);
-  color: #fff;
+
+
+.categoria-btn-modern:focus {
+  outline: none;
+  border-color: #FF9548;
+  box-shadow: 0 0 0 3px rgba(255, 149, 72, 0.3);
 }
+
+/* Estilo básico dos options (limitado) */
+option {
+  background-color: #fff7f0;
+  color: #C0833B;
+  font-weight: 500;
+}
+
+.select{
+  width: 15vw;
+}
+
 .image-upload-modern {
   width: 220px;
   height: 150px;
@@ -187,7 +220,7 @@ input:focus, textarea:focus {
   flex: 1;
 }
 .input-icon-modern input {
-  width: 100%;
+  width: 90%;
   padding-right: 36px;
 }
 .input-icon-modern i {
@@ -221,7 +254,7 @@ input:focus, textarea:focus {
   color: #fff;
 }
 .publicar-btn-modern {
-  background: linear-gradient(90deg, #C0833B 60%, #C83B1B 100%);
+  background: linear-gradient(90deg, #c05a3bb6 60%, #c8601b 100%);
   color: #fff;
   border: none;
   border-radius: 18px;
@@ -243,7 +276,7 @@ input:focus, textarea:focus {
 }
 @media (max-width: 1100px) {
   .event-glass-container {
-    padding: 24px 8px;
+    padding: 0px 8px;
     max-width: 98vw;
   }
   .form-row {
@@ -281,6 +314,7 @@ input:focus, textarea:focus {
   justify-content: center;
   background: none;
 }
+
 .image-placeholder-modern.highlight-upload-box {
   width: 100%;
   height: 100%;
@@ -365,6 +399,19 @@ input:focus, textarea:focus {
 .data-hora-card .input-icon-modern i {
   color: #C0833B;
   font-size: 1.2rem;
+}
+
+.hidden{
+  display: none !important;
+}
+
+#imgEvento{
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
 
 @media (max-width: 900px) {

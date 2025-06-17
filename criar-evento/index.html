@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planify | Criar Evento</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="imagex/png" href="../../img/getposh.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="module" src="script.js" defer></script>
+
 </head>
 <body>
   <header class="header">
     <div class="logo">
-      <img src="img/planify.png" alt="Planify Logo" height="40">
-      <span>Planify</span>
+      <img src="../../img/planify.png" alt="Planify Logo" height="40" style="cursor: pointer" id="logo">
     </div>
     <div class="profile-user">
-      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto do Usuário">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto do Usuário" id="iconeUser">
     </div>
   </header>
   <main class="main-bg">
@@ -30,10 +32,11 @@
           <div class="form-group image-group">
             <label>Imagem de Divulgação</label>
             <div class="image-upload-modern highlight-upload" id="image-upload">
-              <input type="file" id="imagem-divulgacao" accept="image/*" style="display:none">
+              <input type="file" id="imagem-divulgacao" accept="image/*" style="display: none;">
               <div class="image-placeholder-modern highlight-upload-box" id="image-placeholder">
-                <i class="fas fa-image"></i>
-                <span>Clique ou arraste a imagem aqui</span>
+                <i class="fas fa-image placeholder"></i>
+                <span style="text-align: center;" class="placeholder">Clique ou arraste a imagem aqui</span>
+                <div id="imgEvento" class="hidden"></div>
               </div>
             </div>
           </div>
@@ -45,72 +48,172 @@
           </div>
           <div class="form-group">
             <label>Classificação</label>
-            <button type="button" class="categoria-btn-modern">Categoria <i class="fas fa-angle-down"></i></button>
+            <select class="categoria-btn-modern" id="categoria">Categoria
+                        <option value="">Selecione a categoria</option></select>
           </div>
         </div>
         <div class="form-row data-hora-row">
           <div class="data-hora-card">
             <label>Data do Evento</label>
             <div class="input-icon-modern">
-              <input type="date">
-              <i class="fas fa-calendar"></i>
+              <input type="date" id="data">
             </div>
           </div>
           <div class="data-hora-card">
             <label>Hora de Início</label>
             <div class="input-icon-modern">
-              <input type="time">
-              <i class="fas fa-clock"></i>
-            </div>
-          </div>
-          <div class="data-hora-card">
-            <label>Data de Término</label>
-            <div class="input-icon-modern">
-              <input type="date">
-              <i class="fas fa-calendar"></i>
+              <input type="time" id="hora-inicio">
             </div>
           </div>
           <div class="data-hora-card">
             <label>Hora de Término</label>
             <div class="input-icon-modern">
-              <input type="time">
-              <i class="fas fa-clock"></i>
+              <input type="time" id="hora-termino">
             </div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group localizacao-group">
             <label>Localização</label>
-            <input type="text" placeholder="Endereço">
-            <input type="text" placeholder="Nome do Local">
-            <div class="form-row-inline">
-              <input type="text" placeholder="CEP">
-              <input type="text" placeholder="Número">
+            <!-- <input type="text" placeholder="Endereço">
+            <input type="text" placeholder="Nome do Local"> -->
+                        <div class="form-row-inline">
+                          <select name="Estado" id="estado" class="select">
+                            <option value="">Selecione o estado</option>
+                          </select>
+                          <select name="Cidade" id="cidade" class="select" disabled>
+                            <option value="">Selecione o estado primeiro</option>
+                          </select>
             </div>
-            <input type="text" placeholder="Av./Rua">
-            <input type="text" placeholder="Complemento">
             <div class="form-row-inline">
-              <input type="text" placeholder="Bairro">
-              <input type="text" placeholder="Cidade">
+              <!-- <input type="text" placeholder="CEP"> -->
+              <input type="text" placeholder="Número" id="numero">
             </div>
-            <input type="text" placeholder="Estado">
+            <input type="text" placeholder="Av./Rua" id="rua">
+            <!-- <input type="text" placeholder="Complemento"> -->
+
+            <input type="text" placeholder="Bairro" id="bairro">
           </div>
         </div>
         <div class="form-row ingresso-row">
           <div class="form-group ingresso-group">
-            <label>Ingresso</label>
-            <div class="ingresso-tipo-modern">
-              <button type="button" class="ingresso-btn-modern">Pago</button>
-              <button type="button" class="ingresso-btn-modern">Gratuito</button>
-            </div>
+
           </div>
           <div class="form-group publicar-group">
-            <button type="submit" class="publicar-btn-modern">Publicar Evento</button>
+            <button type="button" id="botao" class="publicar-btn-modern">Publicar Evento</button>
           </div>
         </div>
       </form>
     </section>
   </main>
-  <script src="script.js"></script>
+</body>
+</html> <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planify | Criar Evento</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="imagex/png" href="../../img/getposh.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="module" src="script.js" defer></script>
+
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="../../img/planify.png" alt="Planify Logo" height="40" style="cursor: pointer" id="logo">
+    </div>
+    <div class="profile-user">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto do Usuário" id="iconeUser">
+    </div>
+  </header>
+  <main class="main-bg">
+    <section class="event-glass-container">
+      <h1 class="main-title">Informações básicas</h1>
+      <p class="subtitle">Adicione as principais informações do Evento</p>
+      <form class="event-form-modern">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome-evento">Nome do Evento</label>
+            <input type="text" id="nome-evento" placeholder="Digite o nome do evento">
+          </div>
+          <div class="form-group image-group">
+            <label>Imagem de Divulgação</label>
+            <div class="image-upload-modern highlight-upload" id="image-upload">
+              <input type="file" id="imagem-divulgacao" accept="image/*" style="display: none;">
+              <div class="image-placeholder-modern highlight-upload-box" id="image-placeholder">
+                <i class="fas fa-image placeholder"></i>
+                <span style="text-align: center;" class="placeholder">Clique ou arraste a imagem aqui</span>
+                <div id="imgEvento" class="hidden"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="descricao-evento">Descrição do Evento</label>
+            <textarea id="descricao-evento" rows="3" placeholder="Conte todos os detalhes do seu evento"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Classificação</label>
+            <select class="categoria-btn-modern" id="categoria">Categoria
+                        <option value="">Selecione a categoria</option></select>
+          </div>
+        </div>
+        <div class="form-row data-hora-row">
+          <div class="data-hora-card">
+            <label>Data do Evento</label>
+            <div class="input-icon-modern">
+              <input type="date" id="data">
+            </div>
+          </div>
+          <div class="data-hora-card">
+            <label>Hora de Início</label>
+            <div class="input-icon-modern">
+              <input type="time" id="hora-inicio">
+            </div>
+          </div>
+          <div class="data-hora-card">
+            <label>Hora de Término</label>
+            <div class="input-icon-modern">
+              <input type="time" id="hora-termino">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group localizacao-group">
+            <label>Localização</label>
+            <!-- <input type="text" placeholder="Endereço">
+            <input type="text" placeholder="Nome do Local"> -->
+                        <div class="form-row-inline">
+                          <select name="Estado" id="estado" class="select">
+                            <option value="">Selecione o estado</option>
+                          </select>
+                          <select name="Cidade" id="cidade" class="select" disabled>
+                            <option value="">Selecione o estado primeiro</option>
+                          </select>
+            </div>
+            <div class="form-row-inline">
+              <!-- <input type="text" placeholder="CEP"> -->
+              <input type="text" placeholder="Número" id="numero">
+            </div>
+            <input type="text" placeholder="Av./Rua" id="rua">
+            <!-- <input type="text" placeholder="Complemento"> -->
+
+            <input type="text" placeholder="Bairro" id="bairro">
+          </div>
+        </div>
+        <div class="form-row ingresso-row">
+          <div class="form-group ingresso-group">
+
+          </div>
+          <div class="form-group publicar-group">
+            <button type="button" id="botao" class="publicar-btn-modern">Publicar Evento</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
 </body>
 </html> 

@@ -6,20 +6,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planify</title>
   <link rel="stylesheet" href="style.css">
-  <script src="./script.js" defer></script>
+  <script type="module" src="./script.js" defer></script>
   <link rel="shortcut icon" type="imagex/png" href="./img/getposh.png">
 </head>
 
 <body>
   <header class="top-bar">
+  <div class="logo-search-container">
     <div class="logo">
       <img src="./img/planify.png" alt="Planify Logo" />
     </div>
-    <div class="auth-buttons">
-      <button class="btn entrar">Entrar</button>
-      <button id="botaoCadastrar">Cadastrar</button>
+
+    <!-- Campo de pesquisa (visível para todos) -->
+    <div class="search-container">
+      <div class="search-icon" id="search-icon-logged-in">
+        <img src="./img/lupaPesquisa.png" alt="Ícone de Pesquisa" class="search-icon-img" id="pesquisarNome">
+      </div>
+      <input type="text" class="search-bar" id="search-bar-logged-in" placeholder="Pesquisar eventos...">
     </div>
-  </header>
+  </div>
+
+  <!-- Botões de autenticação (visíveis quando NÃO logado) -->
+  <div class="auth-buttons" id="authbuttons">
+    <button class="btn entrar">Entrar</button>
+    <button id="botaoCadastrar">Cadastrar</button>
+  </div>
+
+  <!-- Ações do usuário (visíveis apenas quando logado) -->
+  <div class="user-actions hidden" id="useraction">
+    <a href="./telas/criar-evento/index.html" class="criar-evento-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        class="bi bi-plus-circle criar-evento-icon" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+        <path
+          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+      </svg>
+      <span>Criar Evento</span>
+    </a>
+    <a href="#" class="criar-evento-link" id="meusIngressos">
+      <span>Meus Ingressos</span>
+    </a>
+    <div class="user-info" id="userPfp">
+      <img src="./img/user.png" alt="Foto do Usuário" class="profile-img" id="user-profile-img">
+    </div>
+  </div>
+</header>
 
   <!-- Header para usuário logado -->
   <header class="top-bar logged-in" id="header-logged-in" style="display: none;">
@@ -56,61 +87,57 @@
     </button>
     </div>
   -->
+
+  <!-- FILTRO -->
     <div class="filtros">
       <div class="filtro-box" id="tipo-evento-filtro-box">
         <label for="tipo-evento">Procurando por</label>
         <div class="filtro-input right-icon">
-          <select id="tipo-evento" autocomplete="off">
-            <option value="">Selecione o tipo</option>
-            <option value="show">Show Musical</option>
-            <option value="festa">Festa</option>
-            <option value="standup">Stand-up</option>
-            <!-- Adicione outras categorias se quiser -->
+          <select id="categoria" class="selectFiltro" autocomplete="off">
+
+            <option value="">Selecione o tipo</option> <!-- cada option é uma opção -->
           </select>
+
           <img src="./img/Chevron Down.png" alt="Ícone de Show" class="icone-filtro">
-        </div>
-        <!-- Menu lateral de categorias e subcategorias, inicialmente oculto -->
-        <div class="menu-tipo-cascata" id="menu-tipo-cascata" style="display:none;">
-          <ul class="tipos-lista">
-            <li data-tipo="show">Show Musical</li>
-            <li data-tipo="festa">Festa</li>
-            <li data-tipo="standup">Stand-up</li>
-            <!-- Adicione outras categorias se quiser -->
-          </ul>
-          <ul class="subtipos-lista"></ul>
         </div>
       </div>
 
       <div class="filtro-box" id="estado-filtro-box">
-        <label for="estado">Onde?</label>
+
+        <label for="estado">Estado?</label>
+
         <div class="filtro-input right-icon">
-          <select id="estado" autocomplete="off">
+
+          <select id="estado" class="selectFiltro" autocomplete="off"> <!-- estado -->
             <option value="">Selecione o estado</option>
-            <option value="PE">Pernambuco</option>
-            <option value="SP">São Paulo</option>
-            <option value="RJ">Rio de Janeiro</option>
-            <option value="MG">Minas Gerais</option>
-            <option value="BA">Bahia</option>
-            <option value="RS">Rio Grande do Sul</option>
-            <!-- Adicione outros estados se quiser -->
+          </select>
+
+          <img src="./img/Chevron Down.png" alt="Ícone de seta" class="icone-filtro-right">
+        </div>
+        <!-- Menu lateral de estados e cidades, inicialmente oculto -->
+      </div>
+
+      <div class="filtro-box" id="estado-filtro-box">
+
+        <label for="cidade">Cidade?</label>
+
+        <div class="filtro-input right-icon">
+          <select id="cidade"  class="selectFiltro" disabled> <!-- estado -->
+            <option value="">Selecione um estado primeiro</option>
           </select>
           <img src="./img/Chevron Down.png" alt="Ícone de seta" class="icone-filtro-right">
         </div>
         <!-- Menu lateral de estados e cidades, inicialmente oculto -->
-        <div class="menu-cidades-cascata" id="menu-cidades-cascata" style="display:none;">
-          <ul class="estados-lista"></ul>
-          <ul class="cidades-lista"></ul>
-        </div>
       </div>
 
       <div class="filtro-box" id="quando-filtro-box">
         <label for="quando">Quando</label>
         <div class="filtro-input right-icon">
-          <input type="text" id="quando" name="quando" placeholder="Selecione a data" readonly autocomplete="off">
+          <input type="text" id="quando" class="selectFiltro" name="quando" placeholder="Selecione a data" readonly autocomplete="off">
           <img src="./img/Calendar 17 (1).png" alt="Ícone Calendário" class="icone-filtro-right">
         </div>
         <!-- Menu lateral de calendário, inicialmente oculto -->
-        <div class="menu-calendario-cascata" id="menu-calendario-cascata" style="display:none;">
+        <div class="menu-calendario-cascata" id="menu-calendario-cascata" style="display:none; flex-direction: column;">
           <div class="calendario-header">
             <button class="cal-prev" type="button">&#8592;</button>
             <span class="cal-mesano"></span>
@@ -170,7 +197,7 @@
       </form>
 
       <p class="esqueceu-senha">
-        Esqueceu a senha? <a href="#">Clique aqui</a>
+        Esqueceu a senha? <a id="irEsquecerSenha" style="cursor: pointer">Clique aqui</a>
       </p>
 
       <p class="login-link">Ainda não tem uma conta? <a href="#" id="abrirCadastroViaLogin">Cadastre-se aqui</a></p>
@@ -182,19 +209,19 @@
 
   <!-- POP-UP DE RECUPERAÇÃO DE SENHA -->
   <div id="recuperacao-overlay" class="overlay hidden">
-    <div class="modal-cadastro">
-      <button class="close-btn" id="fecharRecuperacao" onclick="fecharRecuperacaoSenha()">&times;</button>
+    <div class="modal-cadastro" id="modalRecSenha">
+      <button class="close-btn" id="fecharRecuperacao">&times;</button>
       <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
       <h2>Recuperar Senha</h2>
       <p>Informe seu email para redefinir a senha.</p>
 
       <form id="form-recuperar-senha">
         <input type="email" id="recuperar-email" placeholder="E-mail" required>
-        <button type="submit">Enviar</button>
+        <button type="button" id="botao-recuperar-senha">Enviar</button>
       </form>
 
       <p class="voltar-login">
-        <a href="#" id="voltarLogin" onclick="voltarParaLogin()">Voltar para login</a>
+        <a href="#" id="voltarLogin"">Voltar para login</a>
       </p>
     </div>
   </div>
@@ -202,18 +229,18 @@
   <!-- POP-UP DE VERIFICAÇÃO DE CÓDIGO -->
 <div id="verificacao-overlay" class="overlay hidden">
   <div class="modal-cadastro">
-    <button class="close-btn" onclick="fecharVerificacao()">&times;</button>
+    <button class="close-btn" id="fecharVerificacao">&times;</button>
     <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
     <h2>Verificação</h2>
     <p>Enviamos um código para seu e-mail. Insira abaixo para continuar:</p>
 
     <form id="form-verificacao-codigo">
       <input type="text" id="codigo-verificacao" placeholder="Código recebido" required>
-      <button type="submit">Verificar</button>
+      <button type="button" id="botaoCodigo">Verificar</button>
     </form>
 
     <p class="voltar-login">
-      <a href="#" onclick="voltarParaLogin()">Voltar para login</a>
+      <a href="#" id="voltarLogin">Voltar para login</a>
     </p>
   </div>
 </div>
@@ -221,14 +248,14 @@
 <!-- POP-UP INSERIR NOVA SENHA -->
 <div id="nova-senha-overlay" class="overlay hidden">
   <div class="modal-cadastro">
-    <button class="close-btn" onclick="fecharNovaSenha()">&times;</button>
+    <button class="close-btn" id="closeNovaSenha">&times;</button>
     <img src="./img/colorido.png" alt="Logo Planify" class="logo-cadastro">
     <h2>Nova Senha</h2>
     <p>Digite sua nova senha para redefinir:</p>
 
     <form id="form-nova-senha">
       <input type="password" id="nova-senha" placeholder="Nova senha" required>
-      <button type="submit">Salvar</button>
+      <button type="button" id="botaoNovaSenha">Salvar</button>
     </form>
 
     <p class="voltar-login">
@@ -246,7 +273,10 @@
 <section class="eventos-inferior">
   <h2>Eventos em Destaque</h2>
 
+
   <div class="eventos-container">
+
+    <div class="evento-card">
     <!-- Os cards serão preenchidos dinamicamente via JS -->
   </div>
 </section>
@@ -257,6 +287,100 @@
 <!-- barra de rolagem personalizada -->
 <div class="scrollbar" id="barrinha">
   <div class="force-overflow"></div>
+</div>
+
+<!-- Modal para The Town -->
+ <div class="overlay hidden" id="overlay-evento">
+  <div class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 id="eventoNome">Nome do Evento</h1>
+            <div class="close-container" id="botaoFechar">
+                <span class="close town-close">&times;</span>
+            </div>
+        </div>
+  
+        <div class="modal-body">
+            <div class="event-header">
+                <img src="./img/placeholderimg.jpeg" alt="" id='capaEvento'class="event-image">
+                <div class="event-info">
+                    <div class="event-time-location">
+                        <div class="date-time-box">
+                            <p class="event-date" id="dataEvento">12 set - 2025</p>
+                            <p class="event-hours" id="horasEvento">16h00 → 04h00</p>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="location-box">
+                            <p class="event-location" id="localEvento">Autódromo de Interlagos, São Paulo – SP</p>
+                        </div>
+                    </div>
+                </div>
+  
+                <h2>Descrição do Evento</h2>
+                <div class="event-info-container" id="descricaoEvento">
+                    <p>O The Town 2025 promete ser um dos maiores festivais de música e cultura de São Paulo, em sua segunda edição. O evento acontecerá no Autódromo de Interlagos, transformado na "Cidade da Música", nos dia 12 de setembro de 2025.</p>
+                    <p>Com uma programação diversificada que inclui grandes nomes da música nacional e internacional, o festival oferecerá experiências imersivas, gastronomia de qualidade e uma estrutura completa para receber milhares de pessoas.</p>
+                </div>
+  
+                <h3 id="categoriaEvento">Festival Musical</h3>
+            </div>
+  
+            <div class="divider"></div>
+  
+            <div class="button-container">
+                <button class="garantir-btn town-garantir" id="ingresso">Garantir Ingressos</button>
+            </div>
+        </div>
+    </div>
+ </div>
+
+</div>
+
+<div id="toast" class="toast hidden">
+  Ingresso garantido!
+</div>
+
+<div id="tk-ticketModal" class="tk-modal hidden">
+  <div class="tk-modal-content">
+    <div class="tk-modal-header">
+      <h1>Ingressos</h1>
+      <span class="tk-close" id="tk-closeModal">&times;</span>
+    </div>
+    <div class="tk-modal-body">
+      <div class="tk-tabs">
+        <button class="tk-tab-button tk-active" data-tab="tk-ativos">Ativos</button>
+        <button class="tk-tab-button" data-tab="tk-encerrados">Encerrados</button>
+      </div>
+
+      <div id="tk-ativos" class="tk-tab-content tk-active">
+        <!-- <div class="tk-ticket-item">
+          <img src="https://via.placeholder.com/80x50" class="tk-ticket-image" alt="Imagem ingresso ativo">
+
+          <div class="tk-ticket-details">
+            <h4>Ingresso VIP</h4>
+            <p>Evento: Show das Estrelas</p>
+            <span class="tk-status">Ativo</span>
+          </div>
+
+        </div> -->
+      </div>
+
+      <div id="tk-encerrados" class="tk-tab-content">
+        <!-- <div class="tk-ticket-item">
+          <img src="https://via.placeholder.com/80x50" class="tk-ticket-image" alt="Imagem ingresso encerrado">
+          <div class="tk-ticket-details">
+            <h4>Ingresso Backstage</h4>
+            <p>Evento: Noite Eletrônica</p>
+            <span class="tk-status tk-encerrado">Encerrado</span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toastEnviando" class="toast-enviando hidden">
+  Enviando...
 </div>
 
 </body>
